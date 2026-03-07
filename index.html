@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoNam | Namibian Parts Marketplace</title>
+    <title>AutoNam | Marketplace</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; margin: 0; padding: 20px; }
         header { background: #1e293b; padding: 20px; border-radius: 15px; text-align: center; border-bottom: 4px solid #3b82f6; margin-bottom: 30px; }
@@ -15,8 +15,11 @@
         .card img { width: 100%; height: 180px; object-fit: cover; }
         .card-content { padding: 15px; }
         .price { color: #3b82f6; font-weight: bold; font-size: 1.2em; }
-        .timer-box { font-family: monospace; color: #94a3b8; margin-top: 5px; }
-        button { background: #3b82f6; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; }
+        button { background: #3b82f6; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold; }
+        button:hover { background: #2563eb; }
+        /* Simple Modal Styling */
+        #detailsModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1e293b; padding: 30px; border-radius: 15px; border: 2px solid #3b82f6; z-index: 100; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 99; }
     </style>
 </head>
 <body>
@@ -28,55 +31,47 @@
 
 <div class="grid">
     <div class="card">
-        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500&q=60" alt="SUV">
+        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500" alt="SUV">
         <div class="card-content">
             <h3>Toyota Hilux GD-6</h3>
             <p>Front Bumper Assembly</p>
             <p class="price">N$ 4,500</p>
-            <button>View Details</button>
+            <button onclick="showDetails('Toyota Hilux GD-6', 'High-quality replacement bumper. Grade A condition. Available in Windhoek.')">View Details</button>
         </div>
     </div>
-
     <div class="card">
-        <img src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=500&q=60" alt="Sedan">
+        <img src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=500" alt="Sedan">
         <div class="card-content">
             <h3>Volkswagen Golf 7</h3>
             <p>LED Headlight Set</p>
             <p class="price">N$ 3,200</p>
-            <button>View Details</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=60" alt="Sports Car">
-        <div class="card-content">
-            <h3>Porsche 911 Style</h3>
-            <p>Performance Brake Pads</p>
-            <p class="price">N$ 1,850</p>
-            <button>View Details</button>
+            <button onclick="showDetails('Volkswagen Golf 7', 'Genuine LED units. Pair (Left & Right). Tested and working.')">View Details</button>
         </div>
     </div>
 </div>
 
+<div id="overlay" onclick="closeDetails()"></div>
+<div id="detailsModal">
+    <h2 id="modalTitle"></h2>
+    <p id="modalBody"></p>
+    <button onclick="closeDetails()">Close</button>
+</div>
+
 <script>
-    // Timer Logic
     let seconds = 0;
-    setInterval(() => {
-        seconds++;
-        document.getElementById('timer').innerText = seconds;
-    }, 1000);
+    setInterval(() => { seconds++; document.getElementById('timer').innerText = seconds; }, 1000);
 
-    // Auto-Refresh Logic: If the page fails to fetch itself, it waits and reloads when Nginx is back.
-    function heartbeat() {
-        fetch(window.location.href, { mode: 'no-cors' })
-            .then(() => console.log("Connection stable"))
-            .catch(() => {
-                console.log("Server down... attempting auto-recovery...");
-                setTimeout(() => window.location.reload(), 5000);
-            });
+    function showDetails(title, info) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalBody').innerText = info;
+        document.getElementById('detailsModal').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
     }
-    setInterval(heartbeat, 10000);
-</script>
 
+    function closeDetails() {
+        document.getElementById('detailsModal').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
+</script>
 </body>
 </html>
