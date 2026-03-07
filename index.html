@@ -3,75 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoNam | Marketplace</title>
+    <title>AutoNam | Premium Namibian Dealership</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; margin: 0; padding: 20px; }
-        header { background: #1e293b; padding: 20px; border-radius: 15px; text-align: center; border-bottom: 4px solid #3b82f6; margin-bottom: 30px; }
-        .status-bar { display: inline-flex; align-items: center; background: #000; padding: 5px 15px; border-radius: 20px; font-size: 0.8em; margin-top: 10px; }
-        .dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; margin-right: 8px; box-shadow: 0 0 8px #22c55e; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .card { background: #1e293b; border-radius: 15px; overflow: hidden; transition: 0.3s; border: 1px solid #334155; }
-        .card:hover { transform: translateY(-5px); border-color: #3b82f6; }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
-        .card-content { padding: 15px; }
-        .price { color: #3b82f6; font-weight: bold; font-size: 1.2em; }
-        button { background: #3b82f6; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold; }
-        button:hover { background: #2563eb; }
-        /* Simple Modal Styling */
-        #detailsModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1e293b; padding: 30px; border-radius: 15px; border: 2px solid #3b82f6; z-index: 100; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 99; }
+        :root { --accent: #3b82f6; --gold: #fbbf24; --bg: #020617; --card: #1e293b; }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--bg); color: #f8fafc; margin: 0; line-height: 1.6; }
+        
+        /* Navigation & Status */
+        nav { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 1000; }
+        .brand { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; }
+        .status-badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; padding: 6px 16px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(34, 197, 94, 0.2); }
+
+        /* Hero Section */
+        .hero { padding: 100px 5% 60px; text-align: center; background: radial-gradient(circle at top right, #1e3a8a, transparent), radial-gradient(circle at bottom left, #0f172a, transparent); }
+        .hero h1 { font-size: 3.5rem; margin: 0; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Inventory Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 50px 5%; max-width: 1400px; margin: 0 auto; }
+        .card { background: var(--card); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); border-color: var(--accent); }
+        .card img { width: 100%; height: 220px; object-fit: cover; filter: brightness(0.9); }
+        .card-info { padding: 25px; }
+        .tag { background: var(--accent); font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
+        .price { font-size: 1.5rem; font-weight: 700; color: var(--gold); margin: 15px 0; }
+        
+        /* Buttons */
+        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        button { padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: 700; font-size: 0.9rem; }
+        .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4); }
+        .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+        /* Footer & Contact */
+        footer { background: #000; padding: 80px 5%; margin-top: 100px; border-top: 1px solid var(--accent); text-align: center; }
+        .contact-card { background: var(--card); max-width: 600px; margin: 0 auto; padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); }
+        .contact-card h2 { color: var(--gold); margin-top: 0; }
+        .contact-link { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 1.2rem; }
+
+        /* Modal Pop-up */
+        .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; backdrop-filter: blur(5px); }
+        .modal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--card); width:90%; max-width:450px; padding:40px; border-radius:30px; z-index:2001; text-align:center; border: 1px solid var(--accent); }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>AUTONAM <span style="color:#3b82f6">MARKET</span></h1>
-    <div class="status-bar"><div class="dot"></div> SERVER ACTIVE | UPTIME: <span id="timer">0</span>s</div>
-</header>
+<nav>
+    <div class="brand">AUTO<span style="color:var(--accent)">NAM</span></div>
+    <div class="status-badge">● SYSTEM OPERATIONAL | UPTIME: <span id="uptime">0</span>s</div>
+</nav>
 
-<div class="grid">
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500" alt="SUV">
-        <div class="card-content">
-            <h3>Toyota Hilux GD-6</h3>
-            <p>Front Bumper Assembly</p>
-            <p class="price">N$ 4,500</p>
-            <button onclick="showDetails('Toyota Hilux GD-6', 'High-quality replacement bumper. Grade A condition. Available in Windhoek.')">View Details</button>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=500" alt="Sedan">
-        <div class="card-content">
-            <h3>Volkswagen Golf 7</h3>
-            <p>LED Headlight Set</p>
-            <p class="price">N$ 3,200</p>
-            <button onclick="showDetails('Volkswagen Golf 7', 'Genuine LED units. Pair (Left & Right). Tested and working.')">View Details</button>
-        </div>
-    </div>
-</div>
+<section class="hero">
+    <span class="tag" style="background:var(--gold); color:#000">Namibia's #1 Choice</span>
+    <h1>The Future of Driving.</h1>
+    <p style="color:#94a3b8; max-width:600px; margin: 20px auto;">Experience luxury and reliability. Fully autonomous infrastructure with 99.9% uptime monitoring.</p>
+</section>
 
-<div id="overlay" onclick="closeDetails()"></div>
-<div id="detailsModal">
-    <h2 id="modalTitle"></h2>
-    <p id="modalBody"></p>
-    <button onclick="closeDetails()">Close</button>
+<div class="grid" id="carGrid"></div>
+
+<footer>
+    <div class="contact-card">
+        <div style="font-size: 3rem; margin-bottom: 10px;">👤</div>
+        <h2>Direct Sales Representative</h2>
+        <p style="font-size: 1.4rem; font-weight: bold; margin: 5px 0;">Leonora Nashipeta</p>
+        <p style="color: #94a3b8; margin-bottom: 25px;">Final Year IT Specialist | UNAM Honours</p>
+        <div style="margin: 20px 0;">
+            <p>Cell: <a href="tel:0817447484" class="contact-link">0817447484</a></p>
+            <p>Email: <a href="mailto:lnashipeta666@gmail.com" class="contact-link">lnashipeta666@gmail.com</a></p>
+        </div>
+        <button class="btn-primary" style="width: auto; padding: 12px 40px;" onclick="alert('Connecting to WhatsApp...')">Secure Inquiry</button>
+    </div>
+    <p style="margin-top: 50px; color: #475569; font-size: 0.8rem;">© 2026 AutoNam Research Labs. Powered by Ubuntu Server & Nginx.</p>
+</footer>
+
+<div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
+<div class="modal" id="modal">
+    <h2 id="mTitle" style="color:var(--accent)"></h2>
+    <p id="mBody" style="color:#94a3b8; margin-bottom:30px;"></p>
+    <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:15px; margin-bottom:20px;">
+        <p style="margin:0; font-size:0.9rem;">Contact Agent: <strong>Leonora Nashipeta</strong></p>
+        <p style="margin:5px 0; color:var(--gold);"><strong>0817447484</strong></p>
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="closeModal()">Back to Inventory</button>
 </div>
 
 <script>
-    let seconds = 0;
-    setInterval(() => { seconds++; document.getElementById('timer').innerText = seconds; }, 1000);
+    const inventory = [
+        { name: "Toyota Hilux GD-6", price: "N$ 485,000", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600", desc: "2.8L Diesel, 4WD, Off-road package. Clean title." },
+        { name: "VW Golf 7 GTI", price: "N$ 345,000", img: "https://images.unsplash.com/photo-1542282088-fe8426682b8f?w=600", desc: "Performance Pack, Sunroof, 19-inch Rims. Stage 1." },
+        { name: "Mercedes AMG C63", price: "N$ 890,000", img: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=600", desc: "V8 Biturbo, Carbon interior, Track-ready excellence." },
+        { name: "Ford Ranger Raptor", price: "N$ 720,000", img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600", desc: "FOX Racing Shocks, Conquer Gray finish. Like new." },
+        { name: "BMW M3 Competition", price: "N$ 950,000", img: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600", desc: "X-Drive, Isle of Man Green, 503 HP Beast." },
+        { name: "Audi RS5 Sportback", price: "N$ 810,000", img: "https://images.unsplash.com/photo-1606152424101-ad4e9bc367ff?w=600", desc: "Quattro, Nardo Gray, Virtual Cockpit, 2.9L TFSI." }
+    ];
 
-    function showDetails(title, info) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalBody').innerText = info;
-        document.getElementById('detailsModal').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-    }
+    const grid = document.getElementById('carGrid');
+    inventory.forEach(car => {
+        grid.innerHTML += `
+            <div class="card">
+                <img src="${car.img}" alt="Luxury Car">
+                <div class="card-info">
+                    <span class="tag">Verified Stock</span>
+                    <h3 style="margin: 10px 0 5px;">${car.name}</h3>
+                    <div class="price">${car.price}</div>
+                    <div class="btn-row">
+                        <button class="btn-outline" onclick="openModal('${car.name}', '${car.desc}')">Specs</button>
+                        <button class="btn-primary" onclick="openModal('Purchase Order', 'Our sales lead, Leonora, will assist you with the financing for the ${car.name}.')">Buy Now</button>
+                    </div>
+                </div>
+            </div>`;
+    });
 
-    function closeDetails() {
-        document.getElementById('detailsModal').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    }
+    let s = 0; setInterval(() => { s++; document.getElementById('uptime').innerText = s; }, 1000);
+    function openModal(t, b) { document.getElementById('mTitle').innerText = t; document.getElementById('mBody').innerText = b; document.getElementById('modal').style.display='block'; document.getElementById('overlay').style.display='block'; }
+    function closeModal() { document.getElementById('modal').style.display='none'; document.getElementById('overlay').style.display='none'; }
 </script>
 </body>
 </html>
