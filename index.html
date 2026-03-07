@@ -1,11 +1,40 @@
-<DOCTYPE html>
-<HTML>
-<body style="background-color: #00ff00; front-family: monospace; text-align: center;">
-	<h1>Leo's GROUND</h1>
-	<p>Status: [ ONLINE ]</p>
-	<p>Environment: Ubuntu 24.04 + NGINX + Git</p>
-	<hr>
-	<p>Welcome to the automated self-healing cloud zone.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNam | Service Monitor</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a2e; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .container { background: #16213e; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 5px solid #e94560; width: 450px; text-align: center; }
+        .status-badge { background: #0f3460; padding: 10px; border-radius: 50px; display: inline-flex; align-items: center; margin-bottom: 20px; }
+        .dot { width: 12px; height: 12px; background: #00ff41; border-radius: 50%; margin-right: 10px; box-shadow: 0 0 10px #00ff41; }
+        h1 { color: #e94560; margin: 0; font-size: 2.5em; letter-spacing: 2px; }
+        .timer-box { font-size: 1.2em; margin: 20px 0; color: #00d2ff; font-family: monospace; }
+        .search-area { margin-top: 25px; }
+        input { padding: 12px; border-radius: 5px 0 0 5px; border: none; width: 60%; outline: none; }
+        button { padding: 12px 20px; background: #e94560; color: white; border: none; border-radius: 0 5px 5px 0; cursor: pointer; font-weight: bold; }
+        button:hover { background: #ff2e63; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-badge"><div class="dot"></div> SYSTEM ONLINE</div>
+        <h1>AUTONAM</h1>
+        <p>Namibian Automotive Lab Experiment</p>
+        <div class="timer-box">LIVE UPTIME: <span id="timer">0</span>s</div>
+        <div class="search-area">
+            <input type="text" placeholder="Search Parts (e.g. Golf 7 Grille)">
+            <button onclick="alert('Searching Namibian Inventory...')">FIND</button>
+        </div>
+        <p style="font-size: 0.8em; color: #533483; margin-top: 20px;">Project: Leonora Nashipeta | UNAM IT</p>
+    </div>
+    <script>
+        let seconds = 0;
+        setInterval(() => {
+            seconds++;
+            document.getElementById('timer').innerText = seconds;
+        }, 1000);
+    </script>
 </body>
 </html>
-	
