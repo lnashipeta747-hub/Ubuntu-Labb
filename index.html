@@ -14,8 +14,8 @@
         .brand { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; }
         .status-badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; padding: 6px 16px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(34, 197, 94, 0.2); }
 
-        /* Hero Section */
-        .hero { padding: 100px 5% 60px; text-align: center; background: radial-gradient(circle at top right, #1e3a8a, transparent), radial-gradient(circle at bottom left, #0f172a, transparent); }
+        /* Restored Hero Section with Old Background */
+        .hero { padding: 100px 5% 60px; text-align: center; background: linear-gradient(rgba(15,23,42,0.8), rgba(15,23,42,0.8)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1500&q=80'); background-size: cover; background-position: center; border-bottom: 2px solid var(--accent); }
         .hero h1 { font-size: 3.5rem; margin: 0; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         /* Inventory Grid */
@@ -39,6 +39,8 @@
         .contact-card { background: var(--card); max-width: 600px; margin: 0 auto; padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); }
         .contact-card h2 { color: var(--gold); margin-top: 0; }
         .contact-link { color: var(--accent); text-decoration: none; font-weight: bold; font-size: 1.2rem; }
+        /* Professional Profile Picture Circle */
+        .manual-profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--accent); object-fit: cover; box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); margin-bottom: 20px; }
 
         /* Modal Pop-up */
         .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; backdrop-filter: blur(5px); }
@@ -62,7 +64,7 @@
 
 <footer>
     <div class="contact-card">
-        <div style="font-size: 3rem; margin-bottom: 10px;">👤</div>
+        <img src="https://i.postimg.cc/g0KP8XYb/IMG-4341.jpg" alt="Leonora Nashipeta" class="manual-profile-pic" id="pfp">
         <h2>Direct Sales Representative</h2>
         <p style="font-size: 1.4rem; font-weight: bold; margin: 5px 0;">Leonora Nashipeta</p>
         <p style="color: #94a3b8; margin-bottom: 25px;">Final Year IT Specialist | UNAM Honours</p>
@@ -70,7 +72,7 @@
             <p>Cell: <a href="tel:0817447484" class="contact-link">0817447484</a></p>
             <p>Email: <a href="mailto:lnashipeta666@gmail.com" class="contact-link">lnashipeta666@gmail.com</a></p>
         </div>
-        <button class="btn-primary" style="width: auto; padding: 12px 40px;" onclick="alert('Connecting to WhatsApp...')">Secure Inquiry</button>
+        <button class="btn-primary" style="width: auto; padding: 12px 40px;" onclick="alert('Connecting to Secure Portal...')">Secure Inquiry</button>
     </div>
     <p style="margin-top: 50px; color: #475569; font-size: 0.8rem;">© 2026 AutoNam Research Labs. Powered by Ubuntu Server & Nginx.</p>
 </footer>
@@ -107,7 +109,7 @@
                     <div class="price">${car.price}</div>
                     <div class="btn-row">
                         <button class="btn-outline" onclick="openModal('${car.name}', '${car.desc}')">Specs</button>
-                        <button class="btn-primary" onclick="openModal('Purchase Order', 'Our sales lead, Leonora, will assist you with the financing for the ${car.name}.')">Buy Now</button>
+                        <button class="btn-primary" onclick="openModal('Purchase Order', 'Leonora will process your inquiry for the ${car.name}. Our team will contact you for financing.')">Buy Now</button>
                     </div>
                 </div>
             </div>`;
@@ -116,6 +118,15 @@
     let s = 0; setInterval(() => { s++; document.getElementById('uptime').innerText = s; }, 1000);
     function openModal(t, b) { document.getElementById('mTitle').innerText = t; document.getElementById('mBody').innerText = b; document.getElementById('modal').style.display='block'; document.getElementById('overlay').style.display='block'; }
     function closeModal() { document.getElementById('modal').style.display='none'; document.getElementById('overlay').style.display='none'; }
+    
+    // Safety check: If you forget to replace the placeholder, this handles the error gracefully.
+    window.onload = function() {
+        var img = document.getElementById('pfp');
+        if (img.src.includes('https://i.postimg.cc/g0KP8XYb/IMG-4341.jpg')) {
+            console.log("Profile picture placeholder detected. Please update the HTML with your real link.");
+            img.src = "https://via.placeholder.com/150/3b82f6/FFFFFF?text=L";
+        }
+    };
 </script>
 </body>
 </html>
